@@ -4,6 +4,7 @@
   "description": "A collection of helper functions to ease working with the Jest testing framework",
   "main": "index.js",
   "scripts": {
+    "check": "npm run lint && npm run build",
     "clean": "rimraf ./dist",
     "commit": "commit",
     "prebuild": "npm run clean",
@@ -31,6 +32,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run check",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
