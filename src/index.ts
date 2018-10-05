@@ -114,3 +114,19 @@ export function xdescribeMethod<TInstance>(
 ) {
   innerDescribeMethod(xdescribe, methodName, describer);
 }
+
+export function partialOf<TObjectToMock>(partial: Partial<TObjectToMock>): TObjectToMock {
+  return partial as TObjectToMock;
+}
+
+export function deepPartialOf<TObjectToMock>(partial: DeepPartial<TObjectToMock>): TObjectToMock {
+  return partial as TObjectToMock;
+}
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T[P] extends ReadonlyArray<infer U2>
+  ? ReadonlyArray<DeepPartial<U2>>
+  : DeepPartial<T[P]>
+};

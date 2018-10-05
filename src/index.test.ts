@@ -1,4 +1,4 @@
-import { describeMethod, fdescribeMethod, xdescribeMethod } from './index';
+import { deepPartialOf, describeMethod, fdescribeMethod, partialOf, xdescribeMethod } from './index';
 import {
   describeClass, describeFunction, describeModule, fdescribeClass,
   fdescribeFunction, fdescribeModule, xdescribeClass,
@@ -175,6 +175,45 @@ originalDescribe('src/index.ts', () => {
       xdescribeMethod(PortalGun, 'fire', describer);
       expect(xdescribe).toHaveBeenCalledTimes(1);
       expect(xdescribe).toHaveBeenCalledWith('fire', describer);
+    });
+  });
+
+  interface Client {
+    name: string;
+    address: {
+      streetNumber: string;
+      streetName: string;
+      streetType: string;
+      suburb: string;
+      postcode: string;
+      state: string;
+      country: string;
+    };
+  }
+
+  originalDescribe('partialOf', () => {
+    it('should accept a partial and return it type-casted as not partial', () => {
+      const client = partialOf<Client>({
+        name: 'Homer Simpson'
+      });
+      expect(client).toEqual({
+        name: 'Homer Simpson'
+      });
+    });
+  });
+
+  originalDescribe('deepPartialOf', () => {
+    it('should accept a deep partial and return it type-casted as not partial', () => {
+      const client = deepPartialOf<Client>({
+        address: {
+          suburb: 'Springfield'
+        }
+      });
+      expect(client).toEqual({
+        address: {
+          suburb: 'Springfield'
+        }
+      });
     });
   });
 });
