@@ -3,7 +3,8 @@ node_js:
   - "8"
 script:
   - echo "Listing typings files"
-  - ls ./typings
+  - ls
+  - ls typings
   - npm run lint
   - npm run build
   - npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
