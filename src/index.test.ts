@@ -8,7 +8,7 @@ import {
 const originalDescribe = describe;
 const originalXDescribe = xdescribe;
 
-originalDescribe('index.ts', () => {
+originalDescribe('src/index.ts', () => {
   let describeMock: jest.Describe;
   let xdescribeMock: jest.Describe;
   let fdescribeMock: jest.Describe;
@@ -36,7 +36,7 @@ originalDescribe('index.ts', () => {
       describeModule(describer);
       expect(describeMock).toHaveBeenCalledTimes(1);
       expect(describeMock).toHaveBeenCalledWith(
-        expect.stringMatching(/^.*\/src\/index.ts$/i),
+        'src/index.ts',
         describer
       );
     });
@@ -48,7 +48,7 @@ originalDescribe('index.ts', () => {
       xdescribeModule(describer);
       expect(xdescribeMock).toHaveBeenCalledTimes(1);
       expect(xdescribeMock).toHaveBeenCalledWith(
-        expect.stringMatching(/^.*\/src\/index.ts$/i),
+        'src/index.ts',
         describer
       );
     });
@@ -60,7 +60,7 @@ originalDescribe('index.ts', () => {
       fdescribeModule(describer);
       expect(fdescribeMock).toHaveBeenCalledTimes(1);
       expect(fdescribeMock).toHaveBeenCalledWith(
-        expect.stringMatching(/^.*\/src\/index.ts$/i),
+        'src/index.ts',
         describer
       );
     });

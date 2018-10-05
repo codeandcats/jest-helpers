@@ -1,6 +1,6 @@
 import { getSubjectFileName } from './utils';
 
-describe('utils.ts', () => {
+describe('src/utils.ts', () => {
   describe('getSubjectFileName', () => {
     it('should guess the subject filename for a test', () => {
       expect(getSubjectFileName('/src/foo.test.ts')).toEqual('/src/foo.ts');

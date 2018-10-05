@@ -1,4 +1,5 @@
 import * as getStack from 'callsite';
+import resolveAppPath = require('resolve-app-path');
 import { getSubjectFileName } from './utils';
 
 type DescribeFunction = (subject: string, cb: () => void) => void;
@@ -6,7 +7,8 @@ type DescribeFunction = (subject: string, cb: () => void) => void;
 function innerDescribeModule(describe: DescribeFunction, describer: () => void) {
   const stack = getStack();
   const testFileName = stack[2].getFileName();
-  const subjectFileName = getSubjectFileName(testFileName);
+  const relativeTestFileName = testFileName.substr(resolveAppPath().length + 1);
+  const subjectFileName = getSubjectFileName(relativeTestFileName);
   describe(subjectFileName, describer);
 }
 
