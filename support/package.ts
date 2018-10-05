@@ -14,6 +14,11 @@ fs.copyFileSync(
   path.join(appPath, './dist/README.md')
 );
 
+fs.copyFileSync(
+  path.join(appPath, './logo.png'),
+  path.join(appPath, './dist/logo.png')
+);
+
 const packageJson = fs.readFileSync(path.join(appPath, './dist/package.json'), 'utf8');
 const packageObject = JSON.parse(packageJson);
 

@@ -1,5 +1,10 @@
 # jest-helpers
-TypeScript helper functions for Jest to help make your tests resilient to refactoring.
+
+<center>
+  <img src="logo.png" height="100">
+
+  TypeScript helper functions for Jest to help make your tests resilient to refactoring.
+</center>
 
 ## Install
 ```sh
