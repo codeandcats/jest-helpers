@@ -34,7 +34,7 @@ export interface NamedFunction {
   (...args: any[]): any;
 }
 
-export function innerDescribeClass(
+function innerDescribeClass(
   describe: DescribeFunction,
   classToDescribe: Class<{}>,
   describer: () => void
@@ -69,7 +69,7 @@ export function xdescribeClass(classToDescribe: Class<{}>, describer: () => void
   innerDescribeClass(xdescribe, classToDescribe, describer);
 }
 
-export function innerDescribeFunction(
+function innerDescribeFunction(
   describe: DescribeFunction,
   func: NamedFunction,
   describer: () => void
@@ -113,7 +113,7 @@ type FunctionPropertyNames<T> = {
   [K in keyof T]: T[K] extends Function ? K : never
 }[keyof T];
 
-export function innerDescribeMethod<TInstance>(
+function innerDescribeMethod<TInstance>(
   describe: DescribeFunction,
   methodName: FunctionPropertyNames<TInstance>,
   describer: () => void
