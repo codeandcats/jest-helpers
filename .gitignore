@@ -62,3 +62,6 @@ typings/
 
 # Build output
 dist
+
+# VSCode IDE
+.vscode
