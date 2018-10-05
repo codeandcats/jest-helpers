@@ -22,9 +22,9 @@ export function xdescribeModule(describer: () => void) {
   innerDescribeModule(xdescribe, describer);
 }
 
-export interface Class {
+export interface Class<TInstance extends {}> {
   name: string;
-  new(...args: any[]): {};
+  new(...args: any[]): TInstance;
 }
 
 export interface NamedFunction {
@@ -34,21 +34,21 @@ export interface NamedFunction {
 
 export function innerDescribeClass(
   describe: DescribeFunction,
-  classToDescribe: Class,
+  classToDescribe: Class<{}>,
   describer: () => void
 ) {
   describe(classToDescribe.name, describer);
 }
 
-export function describeClass(classToDescribe: Class, describer: () => void) {
+export function describeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(describe, classToDescribe, describer);
 }
 
-export function fdescribeClass(classToDescribe: Class, describer: () => void) {
+export function fdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(fdescribe, classToDescribe, describer);
 }
 
-export function xdescribeClass(classToDescribe: Class, describer: () => void) {
+export function xdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(xdescribe, classToDescribe, describer);
 }
 
@@ -74,4 +74,41 @@ export function fdescribeFunction(func: NamedFunction, describer: () => void) {
 
 export function xdescribeFunction(func: NamedFunction, describer: () => void) {
   innerDescribeFunction(xdescribe, func, describer);
+}
+
+type FunctionPropertyNames<T> = {
+  // tslint:disable-next-line:ban-types
+  [K in keyof T]: T[K] extends Function ? K : never
+}[keyof T];
+
+export function innerDescribeMethod<TInstance>(
+  describe: DescribeFunction,
+  methodName: FunctionPropertyNames<TInstance>,
+  describer: () => void
+) {
+  describe(`${methodName}`, describer);
+}
+
+export function describeMethod<TInstance>(
+  classToTest: Class<TInstance>,
+  methodName: FunctionPropertyNames<TInstance>,
+  describer: () => void
+) {
+  innerDescribeMethod(describe, methodName, describer);
+}
+
+export function fdescribeMethod<TInstance>(
+  classToTest: Class<TInstance>,
+  methodName: FunctionPropertyNames<TInstance>,
+  describer: () => void
+) {
+  innerDescribeMethod(fdescribe, methodName, describer);
+}
+
+export function xdescribeMethod<TInstance>(
+  classToTest: Class<TInstance>,
+  methodName: FunctionPropertyNames<TInstance>,
+  describer: () => void
+) {
+  innerDescribeMethod(xdescribe, methodName, describer);
 }
