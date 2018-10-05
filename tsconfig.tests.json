@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {},
   "include": [
-    "./src/**/*.test.ts",
-    "./typings/**/*.d.ts"
+    "./typings/**/*.d.ts",
+    "./src/**/*.test.ts"
   ]
 }
