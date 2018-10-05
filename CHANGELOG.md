@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/codeandcats/jest-helpers/compare/v1.1.15...v1.2.0) (2018-10-05)
+
+
+### Features
+
+* **core:** ability to call this.describeMethod within describeClass ([8f946c1](https://github.com/codeandcats/jest-helpers/commit/8f946c1))
+
+
+
 <a name="1.1.15"></a>
 ## [1.1.15](https://github.com/codeandcats/jest-helpers/compare/v1.1.14...v1.1.15) (2018-10-05)
 
