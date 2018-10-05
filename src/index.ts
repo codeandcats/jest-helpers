@@ -42,14 +42,29 @@ export function innerDescribeClass(
   describe(classToDescribe.name, describer);
 }
 
+/**
+ * Calls describe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
 export function describeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(describe, classToDescribe, describer);
 }
 
+/**
+ * Calls fdescribe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
 export function fdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(fdescribe, classToDescribe, describer);
 }
 
+/**
+ * Calls xdescribe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
 export function xdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
   innerDescribeClass(xdescribe, classToDescribe, describer);
 }
@@ -66,14 +81,29 @@ export function innerDescribeFunction(
   describe(func.name, describer);
 }
 
+/**
+ * Calls describe with the name of your function.
+ * @param func The function that you want to describe
+ * @param describer Description function
+ */
 export function describeFunction(func: NamedFunction, describer: () => void) {
   innerDescribeFunction(describe, func, describer);
 }
 
+/**
+ * Calls fdescribe with the name of your function.
+ * @param func The function that you want to describe
+ * @param describer Description function
+ */
 export function fdescribeFunction(func: NamedFunction, describer: () => void) {
   innerDescribeFunction(fdescribe, func, describer);
 }
 
+/**
+ * Calls xdescribe with the name of your function.
+ * @param func The function that you want to describe
+ * @param describer Description function
+ */
 export function xdescribeFunction(func: NamedFunction, describer: () => void) {
   innerDescribeFunction(xdescribe, func, describer);
 }
@@ -91,6 +121,12 @@ export function innerDescribeMethod<TInstance>(
   describe(`${methodName}`, describer);
 }
 
+/**
+ * Calls describe with the name of your method
+ * @param classToTest The class to describe
+ * @param methodName The method to describe
+ * @param describer Description function
+ */
 export function describeMethod<TInstance>(
   classToTest: Class<TInstance>,
   methodName: FunctionPropertyNames<TInstance>,
@@ -99,6 +135,12 @@ export function describeMethod<TInstance>(
   innerDescribeMethod(describe, methodName, describer);
 }
 
+/**
+ * Calls fdescribe with the name of your method
+ * @param classToTest The class to describe
+ * @param methodName The method to describe
+ * @param describer Description function
+ */
 export function fdescribeMethod<TInstance>(
   classToTest: Class<TInstance>,
   methodName: FunctionPropertyNames<TInstance>,
@@ -107,6 +149,12 @@ export function fdescribeMethod<TInstance>(
   innerDescribeMethod(fdescribe, methodName, describer);
 }
 
+/**
+ * Calls xdescribe with the name of your method
+ * @param classToTest The class to describe
+ * @param methodName The method to describe
+ * @param describer Description function
+ */
 export function xdescribeMethod<TInstance>(
   classToTest: Class<TInstance>,
   methodName: FunctionPropertyNames<TInstance>,
@@ -115,10 +163,20 @@ export function xdescribeMethod<TInstance>(
   innerDescribeMethod(xdescribe, methodName, describer);
 }
 
+/**
+ * Takes a partial object and type-casts it to the full object.
+ * e.g. partial<Console>({ log: jest.fn() }) // Typecasts to Console with all methods, not just log
+ * @param partial The partial object.
+ */
 export function partialOf<TObjectToMock>(partial: Partial<TObjectToMock>): TObjectToMock {
   return partial as TObjectToMock;
 }
 
+/**
+ * Takes a deep-partial object and type-casts it to the full object.
+ * Works just like partialOf<T> but it's partial all the way down!
+ * @param partial
+ */
 export function deepPartialOf<TObjectToMock>(partial: DeepPartial<TObjectToMock>): TObjectToMock {
   return partial as TObjectToMock;
 }
