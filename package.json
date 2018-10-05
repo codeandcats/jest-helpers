@@ -11,7 +11,7 @@
     "build": "tsc -p ./tsconfig.main.json",
     "lint": "tslint -p ./tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -41,11 +41,17 @@
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@commitlint/prompt-cli": "^7.1.2",
+    "@types/callsite": "^1.0.30",
     "@types/jest": "^23.3.3",
     "@types/node": "^10.11.4",
     "husky": "^1.1.0",
+    "jest": "^23.6.0",
     "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.3",
     "tslint": "^5.11.0",
     "typescript": "^3.1.1"
+  },
+  "dependencies": {
+    "callsite": "^1.0.0"
   }
 }
