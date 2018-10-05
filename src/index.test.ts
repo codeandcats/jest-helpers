@@ -1,4 +1,4 @@
-import { describeModule, fdescribeModule, xdescribeModule } from './index';
+import { describeClass, describeModule, fdescribeClass, fdescribeModule, xdescribeClass, xdescribeModule } from './index';
 
 const originalDescribe = describe;
 const originalXDescribe = xdescribe;
@@ -58,6 +58,39 @@ originalDescribe('index.ts', () => {
         expect.stringMatching(/^.*\/src\/index.ts$/i),
         describer
       );
+    });
+  });
+
+  class Foo {
+    bar(): void {
+      //
+    }
+  }
+
+  originalDescribe('describeClass', () => {
+    it('should call describe with the name of the class', () => {
+      const describer = jest.fn();
+      describeClass(Foo, describer);
+      expect(describeMock).toHaveBeenCalledTimes(1);
+      expect(describeMock).toHaveBeenCalledWith('Foo', describer);
+    });
+  });
+
+  originalDescribe('xdescribeClass', () => {
+    it('should call xdescribe with the name of the class', () => {
+      const describer = jest.fn();
+      xdescribeClass(Foo, describer);
+      expect(xdescribeMock).toHaveBeenCalledTimes(1);
+      expect(xdescribeMock).toHaveBeenCalledWith('Foo', describer);
+    });
+  });
+
+  originalDescribe('fdescribeClass', () => {
+    it('should call fdescribe with the name of the class', () => {
+      const describer = jest.fn();
+      fdescribeClass(Foo, describer);
+      expect(fdescribeMock).toHaveBeenCalledTimes(1);
+      expect(fdescribeMock).toHaveBeenCalledWith('Foo', describer);
     });
   });
 });
