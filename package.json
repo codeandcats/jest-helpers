@@ -1,16 +1,21 @@
 {
   "name": "jest-helpers",
   "version": "1.0.0",
-  "description": "A collection of helper functions to ease working with the Jest testing framework",
+  "description": "Helper functions for Jest which make your tests resilient to refactoring via strong typing",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "check": "npm run lint && npm run build",
+    "check": "npm run lint && npm run build && npm run test",
     "clean": "rimraf ./dist",
     "commit": "commit",
     "prebuild": "npm run clean",
     "build": "tsc -p ./tsconfig.main.json",
     "lint": "tslint -p ./tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
+    "package": "ts-node ./support/package.ts",
+    "prerelease": "npm run package",
+    "release": "git checkout master && git pull origin master && standard-version",
+    "ship-it": "git push --follow-tags origin master && cd ./dist && npm publish",
     "test": "jest"
   },
   "repository": {
@@ -47,7 +52,9 @@
     "husky": "^1.1.0",
     "jest": "^23.6.0",
     "rimraf": "^2.6.2",
+    "standard-version": "^4.4.0",
     "ts-jest": "^23.10.3",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.1.1"
   },
