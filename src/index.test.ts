@@ -1,4 +1,8 @@
-import { describeClass, describeModule, fdescribeClass, fdescribeModule, xdescribeClass, xdescribeModule } from './index';
+import {
+  describeClass, describeFunction, describeModule, fdescribeClass,
+  fdescribeFunction, fdescribeModule, xdescribeClass,
+  xdescribeFunction, xdescribeModule
+} from './index';
 
 const originalDescribe = describe;
 const originalXDescribe = xdescribe;
@@ -91,6 +95,49 @@ originalDescribe('index.ts', () => {
       fdescribeClass(Foo, describer);
       expect(fdescribeMock).toHaveBeenCalledTimes(1);
       expect(fdescribeMock).toHaveBeenCalledWith('Foo', describer);
+    });
+  });
+
+  originalDescribe('describeFunction', () => {
+    it('should call describe with the name of the function', () => {
+      function theFunctionToTest() {
+        //
+      }
+      const describer = jest.fn();
+      describeFunction(theFunctionToTest, describer);
+      expect(describeMock).toHaveBeenCalledTimes(1);
+      expect(describeMock).toHaveBeenCalledWith('theFunctionToTest', describer);
+    });
+
+    it('should error if passed an anonymous function', () => {
+      const describer = jest.fn();
+      expect(() => describeFunction(() => {
+        //
+      }, describer)).toThrowError(new Error('Could not get name from anonymous function'));
+    });
+  });
+
+  originalDescribe('fdescribeFunction', () => {
+    it('should call fdescribe with the name of the function', () => {
+      function theFunctionToTest() {
+        //
+      }
+      const describer = jest.fn();
+      fdescribeFunction(theFunctionToTest, describer);
+      expect(fdescribeMock).toHaveBeenCalledTimes(1);
+      expect(fdescribeMock).toHaveBeenCalledWith('theFunctionToTest', describer);
+    });
+  });
+
+  originalDescribe('xdescribeFunction', () => {
+    it('should call xdescribe with the name of the function', () => {
+      function theFunctionToTest() {
+        //
+      }
+      const describer = jest.fn();
+      xdescribeFunction(theFunctionToTest, describer);
+      expect(xdescribeMock).toHaveBeenCalledTimes(1);
+      expect(xdescribeMock).toHaveBeenCalledWith('theFunctionToTest', describer);
     });
   });
 });

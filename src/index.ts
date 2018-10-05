@@ -22,9 +22,14 @@ export function xdescribeModule(describer: () => void) {
   innerDescribeModule(xdescribe, describer);
 }
 
-interface Class {
+export interface Class {
   name: string;
   new(...args: any[]): {};
+}
+
+export interface NamedFunction {
+  name: string;
+  (...args: any[]): any;
 }
 
 export function innerDescribeClass(
@@ -45,4 +50,28 @@ export function fdescribeClass(classToDescribe: Class, describer: () => void) {
 
 export function xdescribeClass(classToDescribe: Class, describer: () => void) {
   innerDescribeClass(xdescribe, classToDescribe, describer);
+}
+
+export function innerDescribeFunction(
+  describe: DescribeFunction,
+  func: NamedFunction,
+  describer: () => void
+): void {
+  if (!func.name) {
+    throw new Error('Could not get name from anonymous function');
+  }
+
+  describe(func.name, describer);
+}
+
+export function describeFunction(func: NamedFunction, describer: () => void) {
+  innerDescribeFunction(describe, func, describer);
+}
+
+export function fdescribeFunction(func: NamedFunction, describer: () => void) {
+  innerDescribeFunction(fdescribe, func, describer);
+}
+
+export function xdescribeFunction(func: NamedFunction, describer: () => void) {
+  innerDescribeFunction(xdescribe, func, describer);
 }
