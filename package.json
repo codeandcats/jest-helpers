@@ -1,7 +1,7 @@
 {
   "name": "jest-helpers",
   "version": "1.0.0",
-  "description": "Helper functions for Jest which make your tests resilient to refactoring via strong typing",
+  "description": "TypeScript helper functions for Jest to help make your tests resilient to refactoring.",
   "main": "index.js",
   "private": true,
   "scripts": {
