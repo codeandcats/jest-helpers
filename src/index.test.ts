@@ -1,4 +1,4 @@
-import { deepPartialOf, describeMethod, fdescribeMethod, partialOf, xdescribeMethod } from './index';
+import { ClassDescriberContext, deepPartialOf, describeMethod, fdescribeMethod, partialOf, xdescribeMethod } from './index';
 import {
   describeClass, describeFunction, describeModule, fdescribeClass,
   fdescribeFunction, fdescribeModule, xdescribeClass,
@@ -86,7 +86,21 @@ originalDescribe('src/index.ts', () => {
       const describer = jest.fn();
       describeClass(PortalGun, describer);
       expect(describeMock).toHaveBeenCalledTimes(1);
-      expect(describeMock).toHaveBeenCalledWith('PortalGun', describer);
+      expect(describeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
+    });
+
+    it('should allow calling this.describeMethod within class describer', () => {
+      (describeMock as any as jest.Mock<{}>).mockImplementation((_name, classDescriber) => {
+        classDescriber();
+      });
+      const methodDescriber = jest.fn();
+      const describer = function(this: ClassDescriberContext<PortalGun>) {
+        this.describeMethod('fire', methodDescriber);
+      };
+      describeClass(PortalGun, describer);
+      expect(describeMock).toHaveBeenCalledTimes(2);
+      expect(describeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
+      expect(describeMock).toHaveBeenCalledWith('fire', methodDescriber);
     });
   });
 
@@ -95,7 +109,7 @@ originalDescribe('src/index.ts', () => {
       const describer = jest.fn();
       xdescribeClass(PortalGun, describer);
       expect(xdescribeMock).toHaveBeenCalledTimes(1);
-      expect(xdescribeMock).toHaveBeenCalledWith('PortalGun', describer);
+      expect(xdescribeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
     });
   });
 
@@ -104,7 +118,7 @@ originalDescribe('src/index.ts', () => {
       const describer = jest.fn();
       fdescribeClass(PortalGun, describer);
       expect(fdescribeMock).toHaveBeenCalledTimes(1);
-      expect(fdescribeMock).toHaveBeenCalledWith('PortalGun', describer);
+      expect(fdescribeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
     });
   });
 

@@ -46,51 +46,11 @@ export interface NamedFunction {
   (...args: any[]): any;
 }
 
-function innerDescribeClass(
-  describe: DescribeFunction,
-  classToDescribe: Class<{}>,
-  describer: () => void
-) {
-  describe(classToDescribe.name, describer);
-}
-
-/**
- * Calls describe with the name of your class.
- * @param classToDescribe Class to describe
- * @param describer Description function
- */
-export function describeClass(classToDescribe: Class<{}>, describer: () => void) {
-  innerDescribeClass(describe, classToDescribe, describer);
-}
-
-/**
- * Calls fdescribe with the name of your class.
- * @param classToDescribe Class to describe
- * @param describer Description function
- */
-export function fdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
-  innerDescribeClass(fdescribe, classToDescribe, describer);
-}
-
-/**
- * Calls xdescribe with the name of your class.
- * @param classToDescribe Class to describe
- * @param describer Description function
- */
-export function xdescribeClass(classToDescribe: Class<{}>, describer: () => void) {
-  innerDescribeClass(xdescribe, classToDescribe, describer);
-}
-
-function innerDescribeFunction(
-  describe: DescribeFunction,
-  func: NamedFunction,
-  describer: () => void
-): void {
-  if (!func.name) {
-    throw new Error('Could not get name from anonymous function');
-  }
-
-  describe(func.name, describer);
+export interface ClassDescriberContext<TInstance> {
+  describeMethod(
+    methodName: FunctionPropertyNames<TInstance>,
+    describer: () => void
+  ): void;
 }
 
 /**
@@ -118,6 +78,67 @@ export function fdescribeFunction(func: NamedFunction, describer: () => void) {
  */
 export function xdescribeFunction(func: NamedFunction, describer: () => void) {
   innerDescribeFunction(xdescribe, func, describer);
+}
+
+function innerDescribeClass<TInstance>(
+  describeFunc: DescribeFunction,
+  classToDescribe: Class<TInstance>,
+  describer: (this: ClassDescriberContext<TInstance>) => void
+) {
+  const describerContext: ClassDescriberContext<TInstance> = {
+    describeMethod: (methodName: FunctionPropertyNames<TInstance>, methodDescriber: () => void) => {
+      innerDescribeMethod(describe, methodName, methodDescriber);
+    }
+  };
+  describeFunc(classToDescribe.name, describer.bind(describerContext));
+}
+
+/**
+ * Calls describe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
+export function describeClass<TInstance extends {}>(
+  classToDescribe: Class<TInstance>,
+  describer: (this: ClassDescriberContext<TInstance>) => void
+) {
+  innerDescribeClass(describe, classToDescribe, describer);
+}
+
+/**
+ * Calls fdescribe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
+export function fdescribeClass<TInstance extends {}>(
+  classToDescribe: Class<TInstance>,
+  describer: (this: ClassDescriberContext<TInstance>) => void
+) {
+  innerDescribeClass(fdescribe, classToDescribe, describer);
+}
+
+/**
+ * Calls xdescribe with the name of your class.
+ * @param classToDescribe Class to describe
+ * @param describer Description function
+ */
+export function xdescribeClass<TInstance extends {}>(
+  classToDescribe: Class<TInstance>,
+  describer: (this: ClassDescriberContext<TInstance>) => void
+) {
+  innerDescribeClass(xdescribe, classToDescribe, describer);
+}
+
+function innerDescribeFunction(
+  describe: DescribeFunction,
+  func: NamedFunction,
+  describer: () => void
+): void {
+  if (!func.name) {
+    throw new Error('Could not get name from anonymous function');
+  }
+
+  describe(func.name, describer);
 }
 
 type FunctionPropertyNames<T> = {
