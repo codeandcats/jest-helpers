@@ -70,7 +70,7 @@ Running `jest --verbose` will output something like
 
 - ✅ If you rename your `Greeter` class, it will automatically update the test description
 
-- ✅ If you rename your `Greeter.getGreeting` method, it will automatically update the test description
+- ✅ If you rename your `Greeter.getGreeting` method, you will get a TypeScript error in your test until you update `getGreeting` to match the new name
 
 - ✅ If you rename your `showGreeting` method, it will automatically update the test description
 
