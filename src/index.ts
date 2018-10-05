@@ -12,14 +12,26 @@ function innerDescribeModule(describe: DescribeFunction, describer: () => void) 
   describe(subjectFileName, describer);
 }
 
+/**
+ * Calls describe with the name of the module under test
+ * @param describer Description function
+ */
 export function describeModule(describer: () => void) {
   innerDescribeModule(describe, describer);
 }
 
+/**
+ * Calls fdescribe with the name of the module under test
+ * @param describer Description function
+ */
 export function fdescribeModule(describer: () => void) {
   innerDescribeModule(fdescribe, describer);
 }
 
+/**
+ * Calls xdescribe with the name of the module under test
+ * @param describer Description function
+ */
 export function xdescribeModule(describer: () => void) {
   innerDescribeModule(xdescribe, describer);
 }
