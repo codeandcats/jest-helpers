@@ -1,13 +1,20 @@
-import { describeClass, describeFunction, describeMethod, describeModule, partialOf } from '../src';
+import { describeClass, describeField, describeFunction, describeMethod, describeModule, partialOf } from '../src';
+import * as greeterModule from './greeter';
 import { Greeter, showGreeting } from './greeter';
 
 describeModule(() => {
   describeClass(Greeter, () => {
     describeMethod(Greeter, 'getGreeting', () => {
       it('should return a personalised greeting', () => {
-        const greeter = new Greeter();
-        expect(greeter.getGreeting('Joe')).toEqual('Hello Joe');
+        const myGreeter = new Greeter();
+        expect(myGreeter.getGreeting('Joe')).toEqual('Hello Joe');
       });
+    });
+  });
+
+  describeField(greeterModule, 'defaultGreeter', () => {
+    it('should be a Greeter', () => {
+      expect(greeterModule.defaultGreeter).toBeInstanceOf(Greeter);
     });
   });
 

@@ -1,8 +1,8 @@
-import { ClassDescriberContext, deepPartialOf, describeMethod, fdescribeMethod, partialOf, xdescribeMethod } from './index';
 import {
-  describeClass, describeFunction, describeModule, fdescribeClass,
-  fdescribeFunction, fdescribeModule, xdescribeClass,
-  xdescribeFunction, xdescribeModule
+  ClassDescriberContext, deepPartialOf,
+  describeClass, describeField, describeFunction, describeMethod, describeModule,
+  fdescribeClass, fdescribeField, fdescribeFunction, fdescribeMethod, fdescribeModule,
+  partialOf, xdescribeClass, xdescribeField, xdescribeFunction, xdescribeMethod, xdescribeModule
 } from './index';
 
 const originalDescribe = describe;
@@ -89,6 +89,20 @@ originalDescribe('src/index.ts', () => {
       expect(describeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
     });
 
+    it('should allow calling this.describeField within class describer', () => {
+      (describeMock as any as jest.Mock<{}>).mockImplementation((_name, classDescriber) => {
+        classDescriber();
+      });
+      const fieldDescriber = jest.fn();
+      const describer = function(this: ClassDescriberContext<PortalGun>) {
+        this.describeField('dimensionId', fieldDescriber);
+      };
+      describeClass(PortalGun, describer);
+      expect(describeMock).toHaveBeenCalledTimes(2);
+      expect(describeMock).toHaveBeenCalledWith('PortalGun', expect.any(Function));
+      expect(describeMock).toHaveBeenCalledWith('dimensionId', fieldDescriber);
+    });
+
     it('should allow calling this.describeMethod within class describer', () => {
       (describeMock as any as jest.Mock<{}>).mockImplementation((_name, classDescriber) => {
         classDescriber();
@@ -162,6 +176,36 @@ originalDescribe('src/index.ts', () => {
       xdescribeFunction(theFunctionToTest, describer);
       expect(xdescribeMock).toHaveBeenCalledTimes(1);
       expect(xdescribeMock).toHaveBeenCalledWith('theFunctionToTest', describer);
+    });
+  });
+
+  originalDescribe('describeField', () => {
+    it('should call describe with the name of the field', () => {
+      const portalGun = new PortalGun();
+      const describer = jest.fn();
+      describeField(portalGun, 'dimensionId', describer);
+      expect(describe).toHaveBeenCalledTimes(1);
+      expect(describe).toHaveBeenCalledWith('dimensionId', describer);
+    });
+  });
+
+  originalDescribe('fdescribeField', () => {
+    it('should call xdescribe with the name of the field', () => {
+      const portalGun = new PortalGun();
+      const describer = jest.fn();
+      fdescribeField(portalGun, 'dimensionId', describer);
+      expect(fdescribe).toHaveBeenCalledTimes(1);
+      expect(fdescribe).toHaveBeenCalledWith('dimensionId', describer);
+    });
+  });
+
+  originalDescribe('xdescribeField', () => {
+    it('should call xdescribe with the name of the field', () => {
+      const portalGun = new PortalGun();
+      const describer = jest.fn();
+      xdescribeField(portalGun, 'dimensionId', describer);
+      expect(xdescribe).toHaveBeenCalledTimes(1);
+      expect(xdescribe).toHaveBeenCalledWith('dimensionId', describer);
     });
   });
 

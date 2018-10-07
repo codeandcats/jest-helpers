@@ -4,6 +4,8 @@ export class Greeter {
   }
 }
 
+export const defaultGreeter = new Greeter();
+
 export function showGreeting(greeter: Greeter, name: string) {
   const greeting = greeter.getGreeting(name);
   // tslint:disable-next-line:no-console

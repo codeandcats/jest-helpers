@@ -47,6 +47,11 @@ export interface NamedFunction {
 }
 
 export interface ClassDescriberContext<TInstance> {
+  describeField(
+    fieldName: NonFunctionPropertyNames<TInstance>,
+    fieldDescriber: () => void
+  ): void;
+
   describeMethod(
     methodName: FunctionPropertyNames<TInstance>,
     describer: () => void
@@ -86,6 +91,9 @@ function innerDescribeClass<TInstance>(
   describer: (this: ClassDescriberContext<TInstance>) => void
 ) {
   const describerContext: ClassDescriberContext<TInstance> = {
+    describeField: (fieldName: NonFunctionPropertyNames<TInstance>, fieldDescriber: () => void) => {
+      innerDescribeField(describe, fieldName, fieldDescriber);
+    },
     describeMethod: (methodName: FunctionPropertyNames<TInstance>, methodDescriber: () => void) => {
       innerDescribeMethod(describe, methodName, methodDescriber);
     }
@@ -139,6 +147,61 @@ function innerDescribeFunction(
   }
 
   describe(func.name, describer);
+}
+
+type NonFunctionPropertyNames<T> = {
+  // tslint:disable-next-line:ban-types
+  [K in keyof T]: T[K] extends Function ? never : K
+}[keyof T];
+
+export function innerDescribeField<TObject>(
+  describe: DescribeFunction,
+  fieldName: NonFunctionPropertyNames<TObject>,
+  describer: () => void
+) {
+  describe(`${fieldName}`, describer);
+}
+
+/**
+ * Calls describe with the name of your field
+ * @param object The object to describe
+ * @param fieldName The field to describe
+ * @param describer Description function
+ */
+export function describeField<TObject extends {}>(
+  object: TObject,
+  fieldName: NonFunctionPropertyNames<TObject>,
+  describer: () => void
+) {
+  innerDescribeField(describe, fieldName, describer);
+}
+
+/**
+ * Calls fdescribe with the name of your field
+ * @param object The object to describe
+ * @param fieldName The field to describe
+ * @param describer Description function
+ */
+export function fdescribeField<TObject extends {}>(
+  object: TObject,
+  fieldName: NonFunctionPropertyNames<TObject>,
+  describer: () => void
+) {
+  innerDescribeField(fdescribe, fieldName, describer);
+}
+
+/**
+ * Calls xdescribe with the name of your field
+ * @param object The object to describe
+ * @param fieldName The field to describe
+ * @param describer Description function
+ */
+export function xdescribeField<TObject extends {}>(
+  object: TObject,
+  fieldName: NonFunctionPropertyNames<TObject>,
+  describer: () => void
+) {
+  innerDescribeField(xdescribe, fieldName, describer);
 }
 
 type FunctionPropertyNames<T> = {
