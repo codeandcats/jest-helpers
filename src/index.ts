@@ -1,40 +1,5 @@
-import * as getStack from 'callsite';
-import resolveAppPath = require('resolve-app-path');
-import { getSubjectFileName } from './utils';
 
 type DescribeFunction = (subject: string, cb: () => void) => void;
-
-function innerDescribeModule(describe: DescribeFunction, describer: () => void) {
-  const stack = getStack();
-  const testFileName = stack[2].getFileName();
-  const relativeTestFileName = testFileName.substr(resolveAppPath().length + 1);
-  const subjectFileName = getSubjectFileName(relativeTestFileName);
-  describe(subjectFileName, describer);
-}
-
-/**
- * Calls describe with the name of the module under test
- * @param describer Description function
- */
-export function describeModule(describer: () => void) {
-  innerDescribeModule(describe, describer);
-}
-
-/**
- * Calls fdescribe with the name of the module under test
- * @param describer Description function
- */
-export function fdescribeModule(describer: () => void) {
-  innerDescribeModule(fdescribe, describer);
-}
-
-/**
- * Calls xdescribe with the name of the module under test
- * @param describer Description function
- */
-export function xdescribeModule(describer: () => void) {
-  innerDescribeModule(xdescribe, describer);
-}
 
 export interface Class<TInstance extends {}> {
   name: string;

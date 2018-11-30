@@ -34,34 +34,30 @@ export function showGreeting(greeter: Greeter, name: string) {
 
 `./greeter.test.ts`
 ```typescript
-import {
-  describeClass, describeFunction, describeMethod, describeModule, partialOf
-} from 'jest-helpers';
+import { describeClass, describeFunction, describeMethod, partialOf } from 'jest-helpers';
 import { Greeter, showGreeting } from './greeter';
 
-describeModule(() => {
-  describeClass(Greeter, () => {
-    describeMethod(Greeter, 'getGreeting', () => {
-      it('should return a personalised greeting', () => {
-        const greeter = new Greeter();
-        expect(greeter.getGreeting('Joe')).toEqual('Hello Joe');
-      });
+describeClass(Greeter, () => {
+  describeMethod(Greeter, 'getGreeting', () => {
+    it('should return a personalised greeting', () => {
+      const greeter = new Greeter();
+      expect(greeter.getGreeting('Joe')).toEqual('Hello Joe');
     });
   });
+});
 
-  describeFunction(showGreeting, () => {
-    it('should log greeting to the console', () => {
-      const greeterMock = partialOf<Greeter>({
-        getGreeting: jest.fn().mockReturnValue('yo!')
-      });
-
-      jest.spyOn(console, 'log');
-
-      showGreeting(greeterMock, 'Joe');
-
-      expect(greeterMock.getGreeting).toHaveBeenCalledWith('Joe');
-      expect(console.log).toHaveBeenCalledWith('yo!');
+describeFunction(showGreeting, () => {
+  it('should log greeting to the console', () => {
+    const greeterMock = partialOf<Greeter>({
+      getGreeting: jest.fn().mockReturnValue('yo!')
     });
+
+    jest.spyOn(console, 'log');
+
+    showGreeting(greeterMock, 'Joe');
+
+    expect(greeterMock.getGreeting).toHaveBeenCalledWith('Joe');
+    expect(console.log).toHaveBeenCalledWith('yo!');
   });
 });
 ```
@@ -77,8 +73,6 @@ Running `jest --verbose` will output something like
 ```
 
 ## Benefits
-- ✅ If you rename your `greeter.test.ts` module, it will automatically update the test description.
-
 - ✅ If you rename your `Greeter` class, it will automatically update the test description
 
 - ✅ If you rename your `Greeter.getGreeting` method, you will get a TypeScript error in your test until you update `getGreeting` to match the new name

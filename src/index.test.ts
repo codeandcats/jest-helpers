@@ -1,8 +1,8 @@
 import {
   ClassDescriberContext, deepPartialOf,
-  describeClass, describeField, describeFunction, describeMethod, describeModule,
-  fdescribeClass, fdescribeField, fdescribeFunction, fdescribeMethod, fdescribeModule,
-  partialOf, xdescribeClass, xdescribeField, xdescribeFunction, xdescribeMethod, xdescribeModule
+  describeClass, describeField, describeFunction, describeMethod,
+  fdescribeClass, fdescribeField, fdescribeFunction, fdescribeMethod,
+  partialOf, xdescribeClass, xdescribeField, xdescribeFunction, xdescribeMethod
 } from './index';
 
 const originalDescribe = describe;
@@ -28,42 +28,6 @@ originalDescribe('src/index.ts', () => {
     fdescribe = originalXDescribe;
     xdescribe = originalXDescribe;
     describe = originalDescribe;
-  });
-
-  originalDescribe('describeModule', () => {
-    it('should call describe with the filename of the file being tested', () => {
-      const describer = jest.fn();
-      describeModule(describer);
-      expect(describeMock).toHaveBeenCalledTimes(1);
-      expect(describeMock).toHaveBeenCalledWith(
-        'src/index.ts',
-        describer
-      );
-    });
-  });
-
-  originalDescribe('xdescribeModule', () => {
-    it('should call xdescribe with the filename of the file being tested', () => {
-      const describer = jest.fn();
-      xdescribeModule(describer);
-      expect(xdescribeMock).toHaveBeenCalledTimes(1);
-      expect(xdescribeMock).toHaveBeenCalledWith(
-        'src/index.ts',
-        describer
-      );
-    });
-  });
-
-  originalDescribe('fdescribeModule', () => {
-    it('should call fdescribe with the filename of the file being tested', () => {
-      const describer = jest.fn();
-      fdescribeModule(describer);
-      expect(fdescribeMock).toHaveBeenCalledTimes(1);
-      expect(fdescribeMock).toHaveBeenCalledWith(
-        'src/index.ts',
-        describer
-      );
-    });
   });
 
   class PortalGun {
