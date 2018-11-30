@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/codeandcats/jest-helpers/compare/v1.3.1...v2.0.0) (2018-11-30)
+
+
+### Reverts
+
+* **core:** remove describeModule function ([064d0f4](https://github.com/codeandcats/jest-helpers/commit/064d0f4))
+
+
+### BREAKING CHANGES
+
+* **core:** remove describeModule function. jest already includes link to a failing test
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/codeandcats/jest-helpers/compare/v1.3.0...v1.3.1) (2018-10-20)
 
