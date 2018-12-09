@@ -9,7 +9,7 @@
 
 [![npm version](https://badge.fury.io/js/jest-helpers.svg)](https://badge.fury.io/js/jest-helpers)
 [![Build Status](https://travis-ci.org/codeandcats/jest-helpers.svg?branch=master)](https://travis-ci.org/codeandcats/jest-helpers)
-[![Coverage Status](https://coveralls.io/repos/github/codeandcats/jest-helpers/badge.svg?branch=master)](https://coveralls.io/github/codeandcats/jest-helpers?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/codeandcats/jest-helpers/badge.svg?branch=master)](https://coveralls.io/github/codeandcats/jest-helpers?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/codeandcats/jest-helpers.svg)](https://greenkeeper.io/)
 
 
 ## Install
