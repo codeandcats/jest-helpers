@@ -23,33 +23,6 @@ export interface ClassDescriberContext<TInstance> {
   ): void;
 }
 
-/**
- * Calls describe with the name of your function.
- * @param func The function that you want to describe
- * @param describer Description function
- */
-export function describeFunction(func: NamedFunction, describer: () => void) {
-  innerDescribeFunction(describe, func, describer);
-}
-
-/**
- * Calls fdescribe with the name of your function.
- * @param func The function that you want to describe
- * @param describer Description function
- */
-export function fdescribeFunction(func: NamedFunction, describer: () => void) {
-  innerDescribeFunction(fdescribe, func, describer);
-}
-
-/**
- * Calls xdescribe with the name of your function.
- * @param func The function that you want to describe
- * @param describer Description function
- */
-export function xdescribeFunction(func: NamedFunction, describer: () => void) {
-  innerDescribeFunction(xdescribe, func, describer);
-}
-
 function innerDescribeClass<TInstance>(
   describeFunc: DescribeFunction,
   classToDescribe: Class<TInstance>,
@@ -102,16 +75,55 @@ export function xdescribeClass<TInstance extends {}>(
   innerDescribeClass(xdescribe, classToDescribe, describer);
 }
 
-function innerDescribeFunction(
+function innerDescribeFunction<TModule>(
   describe: DescribeFunction,
-  func: NamedFunction,
+  module: TModule,
+  functionName: FunctionPropertyNames<TModule>,
   describer: () => void
-): void {
-  if (!func.name) {
-    throw new Error('Could not get name from anonymous function');
-  }
+) {
+  describe(`${functionName}`, describer);
+}
 
-  describe(func.name, describer);
+/**
+ * Calls describe with the name of your function
+ * @param module The module the function resides in
+ * @param functionName The name of the function
+ * @param describer Description function
+ */
+export function describeFunction<TModule>(
+  module: TModule,
+  functionName: FunctionPropertyNames<TModule>,
+  describer: () => void
+) {
+  innerDescribeFunction(describe, module, functionName, describer);
+}
+
+/**
+ * Calls fdescribe with the name of your function
+ * @param module The module the function resides in
+ * @param functionName The name of the function
+ * @param describer Description function
+ */
+export function fdescribeFunction<TModule>(
+  module: TModule,
+  functionName: FunctionPropertyNames<TModule>,
+  describer: () => void
+) {
+  innerDescribeFunction(fdescribe, module, functionName, describer);
+}
+
+/**
+ * Calls xdescribe with the name of your function
+ * @param module The module the function resides in
+ * @param functionName The name of the function
+ * @param describer Description function
+ */
+export function xdescribeFunction<TModule>(
+  module: TModule,
+  functionName: FunctionPropertyNames<TModule>,
+  describer: () => void
+) {
+  innerDescribeFunction(xdescribe, module, functionName, describer);
 }
 
 type NonFunctionPropertyNames<T> = {

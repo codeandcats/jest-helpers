@@ -17,7 +17,7 @@ describeField(greeterModule, 'defaultGreeter', () => {
   });
 });
 
-describeFunction(showGreeting, () => {
+describeFunction(greeterModule, 'showGreeting', () => {
   it('should log greeting to the console', () => {
     const greeterMock = partialOf<Greeter>({
       getGreeting: jest.fn().mockReturnValue('yo!')

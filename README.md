@@ -3,13 +3,24 @@
 <br />
 <p align="center">
   <img src="logo.png" height="100">
-  <p align="center">TypeScript helper functions for Jest to help make your tests resilient to refactoring.</p>
+  <p align="center">Tests should be living documentation for your code, but often test descriptions get out of sync with your code. This library helps keep them in sync using TypeScript.</p>
 </p>
 <br />
 
 [![npm version](https://badge.fury.io/js/jest-helpers.svg)](https://badge.fury.io/js/jest-helpers)
 [![Build Status](https://travis-ci.org/codeandcats/jest-helpers.svg?branch=master)](https://travis-ci.org/codeandcats/jest-helpers)
 [![Coverage Status](https://coveralls.io/repos/github/codeandcats/jest-helpers/badge.svg?branch=master)](https://coveralls.io/github/codeandcats/jest-helpers?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/codeandcats/jest-helpers.svg)](https://greenkeeper.io/)
+
+
+## Benefits
+- When you rename a class, the name of your test for it will automatically update
+- When you rename any of the following, your test will get a TypeScript error until you update your test:
+  - A method on a class
+  - A field on a class
+  - An exported function inside a module
+- Has useful functions for creating mocks:
+  - `partialOf<T>(partial: Partial<T>): T`
+  - `deepPartialOf<T>(partial: DeepPartial<T>): T`
 
 
 ## Install
@@ -35,6 +46,7 @@ export function showGreeting(greeter: Greeter, name: string) {
 `./greeter.test.ts`
 ```typescript
 import { describeClass, describeFunction, describeMethod, partialOf } from 'jest-helpers';
+import greeterModule = require('greeter');
 import { Greeter, showGreeting } from './greeter';
 
 describeClass(Greeter, () => {
@@ -46,7 +58,7 @@ describeClass(Greeter, () => {
   });
 });
 
-describeFunction(showGreeting, () => {
+describeFunction(greeterModule, 'showGreeting', () => {
   it('should log greeting to the console', () => {
     const greeterMock = partialOf<Greeter>({
       getGreeting: jest.fn().mockReturnValue('yo!')
@@ -72,12 +84,12 @@ Running `jest --verbose` will output something like
       ✓ should log greeting to the console (2ms)
 ```
 
-## Benefits
-- ✅ If you rename your `Greeter` class, it will automatically update the test description
+If you rename your `Greeter` class, it will automatically update the test description.
 
-- ✅ If you rename your `Greeter.getGreeting` method, you will get a TypeScript error in your test until you update `getGreeting` to match the new name
+If you rename your `Greeter.getGreeting` method, you will get a TypeScript error in your test until you update your test to match the new name.
 
-- ✅ If you rename your `showGreeting` method, it will automatically update the test description
+If you rename your `showGreeting` function, you will get a TypeScript error in your test until you update your test to match the new name.
+
 
 ## Contributing
 Got an issue or a feature request? [Log it](https://github.com/codeandcats/jest-helpers/issues).
