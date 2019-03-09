@@ -4,7 +4,6 @@
     "outDir": "./dist"
   },
   "files": [
-    "./typings/resolve-app-path.d.ts",
     "./src/index.ts"
   ]
 }
