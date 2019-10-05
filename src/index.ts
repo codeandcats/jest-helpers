@@ -261,3 +261,8 @@ export type DeepPartial<T> = {
   ? ReadonlyArray<DeepPartial<U2>>
   : DeepPartial<T[P]>
 };
+
+export interface TestCase<TInput, TExpected> {
+  input: TInput;
+  expected: TExpected;
+}
