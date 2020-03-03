@@ -10,7 +10,6 @@
   "scripts": {
     "check": "npm run lint && npm run build && npm run test",
     "clean": "rimraf ./dist",
-    "commit": "commit",
     "prebuild": "npm run clean",
     "build": "tsc -p ./tsconfig.main.json",
     "postbuild": "npm run package",
@@ -49,7 +48,6 @@
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
-    "@commitlint/prompt-cli": "8.3.5",
     "@types/jest": "24.9.1",
     "@types/node": "12.12.21",
     "coveralls": "3.0.9",
